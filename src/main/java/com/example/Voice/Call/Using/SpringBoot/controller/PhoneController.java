@@ -9,15 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
+import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
 @RestController
 @RequestMapping("/phone")
 public class PhoneController {
-    public static final String ACCOUNT_SID = "AC263ec218becd92c09282c051fb9d7c79";
-    public static final String AUTH_TOKEN = "f54345a69c63340ee3e8d87c9e4279ce";
-    public static final String FROM_NUMBER = "+19163892470";
-    public static final String TO_NUMBER = "+918519013280";
+    public static final String ACCOUNT_SID = "***";
+    public static final String AUTH_TOKEN = "***";
+    public static final String FROM_NUMBER = "***";
+    public static final String TO_NUMBER = "***";
 
     static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -32,4 +33,12 @@ public class PhoneController {
         return "Please check your phone";
     }
 
+    @GetMapping("/messageSMS")
+    public String makeMSMSmessage() throws URISyntaxException {
+        Message message = Message.creator(new PhoneNumber("+15558675309"), new PhoneNumber("+15017250604"),
+                "This is the ship that made the Kessel Run in fourteen parsecs?").create();
+
+        System.out.println(message.getSid());
+        return "Please check your phone for message";
+    }
 }
